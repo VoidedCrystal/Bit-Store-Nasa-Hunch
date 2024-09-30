@@ -1,15 +1,17 @@
 <!doctype html>
 <html>
-<head>
-<meta charset="utf-8">
-<!-- TemplateBeginEditable name="doctitle" -->
-<title>Untitled Document</title>
-<!-- TemplateEndEditable -->
-<!-- TemplateBeginEditable name="head" -->
-<!-- TemplateEndEditable -->
-</head>
+	<head>
+		<link href="css/Style.css" type="text/css" rel="stylesheet"/>
+		<meta charset="utf-8">
+		<!-- TemplateBeginEditable name="doctitle" -->
+		<title>Untitled Document</title>
+		<!-- TemplateEndEditable -->
+		<!-- TemplateBeginEditable name="head" -->
+		<!-- TemplateEndEditable -->
+	</head>
 
-<body>
-	<h1>Check</h1>
-</body>
+	<body>
+		<script src="JS/scripts.js"></script>
+		<h1>Check</h1>
+	</body>
 </html>
