@@ -811,6 +811,13 @@ float: right;
   --bs-btn-border-radius: 0.25rem;
 }
 
+.login {
+	float: right;
+}
+.signup{
+	float: right;
+}
+
 a {
 	color: red
 }
