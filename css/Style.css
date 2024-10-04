@@ -456,7 +456,7 @@
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
-float: right; 
+	float: right; 
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
