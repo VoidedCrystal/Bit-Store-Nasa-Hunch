@@ -31,3 +31,8 @@ button{
 	border-radius: 10px;
 	padding: 10px
 }
+button a{
+	color: #CB22FF;
+	font-weight: bold;
+	font-size: 15px;
+}
