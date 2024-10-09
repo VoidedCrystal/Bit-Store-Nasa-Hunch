@@ -3,3 +3,31 @@
 *{
 	text-decoration: none;
 }
+
+.navbar{
+	background: #2D2D2D;
+	font-family: Cambria, "Hoefler Text", "Liberation Serif", Times, "Times New Roman", "serif";
+	padding-right: 15px;
+	padding-left: 15px;
+}
+.navdiv{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+li{
+	list-style: none;
+	display: inline-block;
+}
+li a{
+	color: #CB22FF; 
+	font-size: 20px; 
+	font-weight: bold; 
+	margin-right: 25px;
+}
+button{
+	background: White; 
+	margin-left: 10px;
+	border-radius: 10px;
+	padding: 10px
+}
