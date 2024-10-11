@@ -1,18 +1,24 @@
 /* CSS Document */
 
-body {
-	background-color: #242424;
+:root{
+	--BackgroundColor: #242424;
+	
 }
+
+body {
+	background-color: var(--BackgroundColor);
+}
+
 form {
 	color: white;
 }
+
 h2{
 	color: white;
 }
 
 /* MAKE BOX FOR WHOLE PAGE IDOT*/
 .Authbox{
-	align-items: center;
 	display:block;
 	background: #0F0F0F;
 	border-style: solid;
