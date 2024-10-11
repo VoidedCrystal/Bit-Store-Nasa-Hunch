@@ -11,11 +11,12 @@ body {
 h1 {
 	font-family: Courier, serif;
 	color: #dddddd;
-	
+	text-align: center;
 }
 p {
 	font-family: Courier, monospace;
 	color: #dddddd;
+	text-align: center;
 }
 
 /* Navbar */
