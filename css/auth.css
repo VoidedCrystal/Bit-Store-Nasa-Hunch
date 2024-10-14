@@ -64,7 +64,13 @@ input {
 	border-radius: 20px;
 	height: auto;
 	width: 260px;
-	padding-left: 3%
+	font-size:17px;
+	text-align: center;
+}
+
+.linkbox a {
+	color:#AC00CA;
+	
 }
 
 #Register{
