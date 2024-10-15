@@ -8,15 +8,23 @@
 	</head>
 
 	<body>
-		<img src="../Assets/bitsore3.png" height="90px">
+		<img class="logo" src="../Assets/bitsore3.png" height="90px">
+		<div id="Register" class="Authbox">
 			<h2>Register to Bit-Store</h2>
-			<form>
+			<form action="../Server.php" method="post">
 				<p><label for="Email">Email</label></p>
 				<input type="email" name="Email" required="true">
 				<p><label for="User">Username</label></p>
 				<input type="text" name="User" required="true">
 				<p><label for="Password">Password</label></p>
 				<input type="password" name="Password" required="true">
+				<p></p>
+				<input class="submit" type="submit" name="Register" required="true" value="Register">
 			</form>
+		</div>
+		<p></p>
+		<div class="linkbox">
+			<h5>Already Registered? <a href="Login.html">Sign In</a></h5>
+		</div>
 	</body>
 </html>

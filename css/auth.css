@@ -1,22 +1,85 @@
 /* CSS Document */
 
-body {
-	background-color: #242424;
+:root{
+	--BackgroundColor: #242424;
+	
 }
+
+body {
+	background-color: var(--BackgroundColor);
+	font-family: "Courier", Monospace, Baskerville, "Palatino Linotype", Palatino, "Century Schoolbook L", "Times New Roman", "serif" 
+}
+
 form {
 	color: white;
+	
 }
+
 h2{
 	color: white;
 }
 
+h5{
+	color: white;
+}
+
+input {
+	width: 250px;
+	background-color: #2F2F2F;
+}
+
+.submit{
+	width: 260px;
+	padding: 3%;
+	font-family: Gotham, "Helvetica Neue", Helvetica, Arial, "sans-serif";
+	background-color: #8400C1;
+	border-radius: 10px;
+	border-style: outset;
+	border-color: #4B006E;
+	color:white;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+
 /* MAKE BOX FOR WHOLE PAGE IDOT*/
 .Authbox{
-	align-items: center;
+	margin:auto;
 	display:block;
 	background: #0F0F0F;
 	border-style: solid;
 	border-radius: 20px;
-	height: 250px;
-	width: 300px
+	height: auto;
+	width: 260px;
+	padding-bottom: 1%;
+	padding-right: 1%;
+	padding-left: 1%;
+}
+.linkbox
+{
+	margin:auto;
+	display:block;
+	background: #0F0F0F;
+	border-style: solid;
+	border-radius: 20px;
+	height: auto;
+	width: 260px;
+	font-size:17px;
+	text-align: center;
+}
+
+.linkbox a {
+	color:#AC00CA;
+	
+}
+
+#Register{
+	width: 303px
+}
+#Register .submit{
+	width: 303px
+
+}
+#Register input{
+	width:290px;
 }
