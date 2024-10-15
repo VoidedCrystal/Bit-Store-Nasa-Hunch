@@ -10,24 +10,7 @@ body {
 }
 
 /* Pop Up Box */
-.popup {
-    background-color: #ffffff;
-    width: 30%;
-    padding: 30px 40px;
-    position: absolute;
-    transform: translate(-50%,-50%);
-    left: 50%;
-    top: 50%;
-    border-radius: 8px;
-    font-family: "Poppins",sans-serif;
-    display: none;
-    text-align: center;
-	z-index: 5;
-}
-.contentbox {
-	color:#000000;
-	z-index: 5;
-}
+
 
 /* Default Text */
 h1 {
