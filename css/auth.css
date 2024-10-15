@@ -73,6 +73,14 @@ input {
 	
 }
 
+input, select, textarea{
+    color: #ff0000;
+}
+
+textarea:focus, input:focus {
+    color: #ff0000;
+}
+
 #Register{
 	width: 303px
 }
