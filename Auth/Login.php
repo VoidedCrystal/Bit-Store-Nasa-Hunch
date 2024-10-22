@@ -35,3 +35,13 @@ header("Location: dashboard.php"); exit; } else { echo "Incorrect password!"; } 
 
 // Close the connection 
 $stmt->close(); $mysqli->close(); }
+?>
+<!doctype html>
+    <html>
+        <head>
+            
+        </head>
+        <body>
+
+        </body>
+    </html>    
