@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer');
 const mongoose = require('mongoose');
 const path = require('path');
-
 const app = express();
 const port = 3000;
 
@@ -42,7 +41,7 @@ app.set('view engine', 'ejs');
 
 // Route to serve the upload form
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'upload_form.html')); // Adjust the path as needed
+    res.sendFile(path.join(__dirname, '/views/files.ejs')); // Adjust the path as needed
 });
 
 // Route for file upload
