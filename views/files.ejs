@@ -6,6 +6,12 @@
     <title>File Download Page</title>
 </head>
 <body>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <div class="button">
+            <button type="submit">Upload</button>
+        </div>
+    </form>
     <h1>Available Files</h1>
     <ul>
         <% files.forEach(function(file) { %>
