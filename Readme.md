@@ -6,13 +6,23 @@ https://voidedcrystal.github.io/Bit-Store-Nasa-Hunch/
 
 Create a Data Repository for NASA Hunch teams. This repository will allow the teams to store projects, data, and anything else they would like to store. Our repository will be web-based allowing users to authenticate themselves and keep their files safe. Additionally, users will be able to create teams with our website so users can keep track of project dates and team members. Our repository can be run on Raspberry Pi servers. For more information please see the More Information tab on the bottom of this document or contact us.  Sebastion: [2070654@jeffcoschools.us](mailto:2070654@jeffcoschools.us), Kyle: [2058822@jeffcoschools.us](mailto:2058822@jeffcoschools.us), Leo: [2098165@jeffcoschools.us](mailto:2098165@jeffcoschools.us). 
 
-Goals Roadmap:
+Goals Roadmap (Old):
 
 * Dynamic Website /- Function & Design: Basic Website 10/16/24 
 * Data Storage: 11/31/24   
 * File Sharing & Version Control: 12/31/24
 * File Archiving: 1/17/25
 * Authentication & Security: 1/31/25
+* Co-operative Live Editing: 2/?/25
+
+Goals Roadmap:
+* Function & Design: Basic Website 10/16/24  
+* Authentication & Security: 10/31/24  
+* Data Storage: 12/30/24  
+* File Sharing & Version Control: 1/25/25  
+* Dynamic Website: 1/31/25  
+* Local Raspberry Pi testing: 1/31/25   
+* File Archiving: 2/15/25  
 * Co-operative Live Editing: 2/?/25
 
 ## Schedule \- milestones \+ how can we ensure they are reached? 
