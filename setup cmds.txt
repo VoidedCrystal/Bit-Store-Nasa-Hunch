@@ -21,6 +21,13 @@ node -v # should print `v22.12.0`
 npm -v # should print `10.9.0`
 npm install
 
+# ^^^ If This doesnt work for you Use Docker Instead
+https://www.docker.com
+docker pull node:22-alpine
+docker run -it --rm --entrypoint sh node:22-alpine
+node -v # Should print "v22.13.0".
+npm -v # Should print "10.9.2".
+
 # create react project
 npm create vite@latest
 
