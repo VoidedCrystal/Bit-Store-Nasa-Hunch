@@ -13,7 +13,7 @@ function Home() {
             </a>
           </div>
           <ul>
-            <li><Link to="/about">About</Link></li>
+            <li><a href="About.jsx">About</a></li>
             <button><Link to="/auth/login">Login</Link></button>
             <button><Link to="/auth/sign_up">Sign Up</Link></button>
           </ul>

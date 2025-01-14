@@ -31,7 +31,7 @@ npm -v # Should print "10.9.2".
 # create react project
 npm create vite@latest
 
-npm run dev # for frontend
+ # for frontend
 
 # for files
 npm start
