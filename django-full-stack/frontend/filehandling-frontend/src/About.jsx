@@ -18,11 +18,16 @@ function About() {
       <nav className="navbar">
         <div className="navdiv">
           <div id="mySidebar" className="sidebar">
-            <a href="#" className="closebtn" onClick={closeNav}>×</a>
-            <a href="#">Filler</a>
-            <a href="./Documents">Projects</a>
-            <a href="#">Settings</a>
-            <a href="#">Filler</a>
+            {//eslint-disable-next-line
+            } <a href="#" className="closebtn" onClick={closeNav}>×</a>
+            {//eslint-disable-next-line
+            }<a href="#">Filler</a>
+            {//eslint-disable-next-line
+            }<a href="./Documents">Projects</a>
+            {//eslint-disable-next-line
+            }<a href="#">Settings</a>
+            {//eslint-disable-next-line
+            }<a href="#">Filler</a>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>
