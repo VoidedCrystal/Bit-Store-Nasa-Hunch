@@ -4,6 +4,8 @@ import Documents from './Documents';
 import Preview from './Preview';
 import Home from './Home';
 import About from './About';
+import Login from './Login';
+import Signup from './Signup';
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Login" element={<Login />} />
         <Route path="/" element={<Documents />} />
         <Route path="/preview/:id/:url" element={<Preview />} />
       </Routes>
