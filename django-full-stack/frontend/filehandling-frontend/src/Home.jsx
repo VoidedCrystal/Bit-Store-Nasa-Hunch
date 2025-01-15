@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './style.css';
 
 function Home() {
@@ -13,7 +13,7 @@ function Home() {
             </a>
           </div>
           <ul>
-            <li><a href="About.jsx">About</a></li>
+            <li><Link to="/About">About</Link></li>
             <button><Link to="/auth/login">Login</Link></button>
             <button><Link to="/auth/sign_up">Sign Up</Link></button>
           </ul>

@@ -18,7 +18,7 @@ function About() {
       <nav className="navbar">
         <div className="navdiv">
           <div id="mySidebar" className="sidebar">
-            <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>×</a>
+            <a href="#" className="closebtn" onClick={closeNav}>×</a>
             <a href="#">Filler</a>
             <a href="./Documents">Projects</a>
             <a href="#">Settings</a>

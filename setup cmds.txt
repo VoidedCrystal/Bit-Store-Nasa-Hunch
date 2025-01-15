@@ -28,11 +28,5 @@ docker run -it --rm --entrypoint sh node:22-alpine
 node -v # Should print "v22.13.0".
 npm -v # Should print "10.9.2".
 
-# create react project
-npm create vite@latest
-
- # for frontend
-
-# for files
 npm start
 npm install jsonwebtoken bcryptjs
