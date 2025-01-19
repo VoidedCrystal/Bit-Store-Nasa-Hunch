@@ -2,38 +2,12 @@
 import React from 'react';
 //eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import './Auth.css';
+import './css/auth.css';
 
-function Upload() {
-  const [user, getUsername] = useState('');
-  const [Password, getPassword] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-
-    fetch('http://127.0.0.1:8000/api/documents/', {
-      method: 'POST',
-      body: formData,
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        setDescription('');
-        setFile(null);
-      })
-      .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-  };
+function Login() {
     return (
         <div>
-            <img src="../Assets/bitsore3.png" height="90px"/>
+            <img src="../assets/bitsore3.png" height="90px"/>
             <div class="Authbox">
                 <h2>Login to Bit-Store</h2>
                 <form action="Login.php" method="post">

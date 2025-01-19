@@ -1,7 +1,7 @@
 import React from 'react';
 //eslint-disable-next-line
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import './style.css';
+import './css/styles.css';
 
 function Home() {
   return (
@@ -15,8 +15,8 @@ function Home() {
           </div>
           <ul>
             <li><Link to="/About">About</Link></li>
-            <button><Link to="/auth/login">Login</Link></button>
-            <button><Link to="/auth/sign_up">Sign Up</Link></button>
+            <button><Link to="/login">Login</Link></button>
+            <button><Link to="/signup">Sign Up</Link></button>
           </ul>
         </div>
       </nav>

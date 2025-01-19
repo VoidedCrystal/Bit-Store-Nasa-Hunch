@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './style.css';
+import './css/styles.css';
 
 function About() {
   const openNav = () => {
@@ -39,8 +39,8 @@ function About() {
           </div>
           <ul>
             <li><Link to="/About">About</Link></li>
-            <button><Link to="/auth/login">Login</Link></button>
-            <button><Link to="/auth/sign_up">Sign Up</Link></button>
+            <button><Link to="/login">Login</Link></button>
+            <button><Link to="/signup">Sign Up</Link></button>
           </ul>
         </div>
       </nav>
