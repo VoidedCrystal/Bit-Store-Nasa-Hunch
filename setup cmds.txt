@@ -1,0 +1,38 @@
+# django set up
+cd backend
+python -m venv venv
+.\venv\Scripts\activate
+pip install django
+pip install djangorestframework
+pip install django-cors-headers
+pip install mysqlclient
+pip install djangorestframework djangorestframework-simplejwt
+pip install firebase-admin
+python manage.py migrate
+python manage.py runserver
+
+# create app and project creation
+django-admin startproject name
+py manage.py startapp name
+
+# node set up
+cd frontend
+cd filehandling-frontend
+winget install Schniz.fnm
+fnm env --use-on-cd | Out-String | Invoke-Expression
+fnm use --install-if-missing 22
+node -v # should print `v22.12.0`
+npm -v # should print `10.9.0`
+npm install jsonwebtoken bcryptjs
+npm install firebase
+npm install
+
+# ^^^ If This doesnt work for you Use Docker Instead
+https://www.docker.com
+docker pull node:22-alpine
+docker run -it --rm --entrypoint sh node:22-alpine
+node -v # Should print "v22.13.0".
+npm -v # Should print "10.9.2".
+
+# Run with
+npm start
