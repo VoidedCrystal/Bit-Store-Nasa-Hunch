@@ -23,8 +23,8 @@ fnm env --use-on-cd | Out-String | Invoke-Expression
 fnm use --install-if-missing 22
 node -v # should print `v22.12.0`
 npm -v # should print `10.9.0`
-npm install jsonwebtoken bcryptjs
 npm install firebase
+npm install -g firebase-tools
 npm install
 
 # ^^^ If This doesnt work for you Use Docker Instead
@@ -36,3 +36,7 @@ npm -v # Should print "10.9.2".
 
 # Run with
 npm start
+
+# Deploy with
+npm run build
+firebase deploy

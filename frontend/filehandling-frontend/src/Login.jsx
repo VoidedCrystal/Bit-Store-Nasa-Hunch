@@ -1,27 +1,72 @@
-//eslint-disable-next-line
-import React from 'react';
-//eslint-disable-next-line
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, Navigate } from 'react-router-dom';
+import { doSignInWithEmailAndPassword, doSignInWithGoogle } from './firebase/auth';
+import { useAuth } from './contexts/authContext';
 import './css/auth.css';
 
 function Login() {
+    const { userLoggedIn, currentUser } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSigningIn, setIsSigningIn] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        setIsSigningIn(true);
+        try {
+            await doSignInWithEmailAndPassword(email, password);
+            userLoggedIn();
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
+    }
+
+    const onGoogleSignIn = async (e) => {
+        e.preventDefault();
+        setIsSigningIn(true);
+        try {
+            await doSignInWithGoogle();
+            userLoggedIn();
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
+    }
+
     return (
         <div>
+            {currentUser && <Navigate to="/About" />}
             <img src="../assets/bitsore3.png" height="90px"/>
-            <div class="Authbox">
+            <div className="Authbox">
                 <h2>Login to Bit-Store</h2>
-                <form action="Login.php" method="post">
-                    <p><label for="User">"Username"</label></p>
-                    <input type="text" name="User" required="true"/>
-                    <p><label for="Password">Password</label></p>
-                    <input type="password" name="Password" required="true"/>
+                <form onSubmit={onSubmit}>
+                    <p><label htmlFor="User">Username</label></p>
+                    <input
+                        type="text"
+                        name="User"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <p><label htmlFor="Password">Password</label></p>
+                    <input
+                        type="password"
+                        name="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                     <p></p>
-                    <input class="submit" type="submit" name="Login" required="true" value="Login"/>
+                    <input className="submit" type="submit" name="Login" value="Login" disabled={isSigningIn} />
                 </form>
+                {errorMessage && <p>{errorMessage}</p>}
+                <button onClick={onGoogleSignIn} disabled={isSigningIn}>Sign in with Google</button>
             </div>
             <p></p>
-            <div class="linkbox">
-                <h5>New to Bit-Store? <a href="Sign_Up.html"><p>Create an Account</p></a></h5>
+            <div className="linkbox">
+                <h5>New to Bit-Store? <Link to="/signup"><p>Create an Account</p></Link></h5>
             </div>
         </div> 
     );
