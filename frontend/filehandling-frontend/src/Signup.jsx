@@ -21,6 +21,18 @@ function Signup() {
         }
     }
 
+    const onGoogleSignIn = async (e) => {
+        e.preventDefault();
+        setIsSigningIn(true);
+        try {
+            await doSignInWithGoogle();
+            userLoggedIn();
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
+    }
+
     return (
         <div>
             <form onSubmit={onSubmit}>
@@ -41,6 +53,7 @@ function Signup() {
                 </button>
                 {errorMessage && <p>{errorMessage}</p>}
             </form>
+            <button onClick={onGoogleSignIn} disabled={isSigningIn}>Sign up with Google</button>
         </div>
     );
 }

@@ -10,11 +10,13 @@ import Signup from './Signup';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/About" element={<About />} />
+      <Route path="/" element={<About />} />
+      <Route path="/Home" element={<Home />} />
       <Route path="/Signup" element={<Signup />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Documents" element={<Documents />} />
+      <Route path="/Teams" element={<Teams />} />
+      <Route path="/Settings" element={<Settings />} />
       <Route path="/preview/:id/:url" element={<Preview />} />
     </Routes>
   );
