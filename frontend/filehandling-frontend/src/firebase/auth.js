@@ -9,7 +9,7 @@ export const doSignInWithEmailAndPassword = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-export const doSignInWithGoogle = () => { // Ensure correct function name
+export const doSignInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     return signInWithPopup(auth, provider);
 }
