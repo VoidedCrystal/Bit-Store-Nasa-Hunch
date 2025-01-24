@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './css/styles.css';
 
-function Settings() {
+function Teams() {
   return (
     <div>
       <h1>Filler</h1>
@@ -10,4 +10,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default Teams;

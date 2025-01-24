@@ -14,121 +14,53 @@ function Signup() {
   const [errorMessage, setErrorMessage] = useState('');
   const [isGoogleSignIn, setIsGoogleSignIn] = useState(false);
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setIsSigningUp(true);
-    try {
-      await signup(email, password, username);
-    } catch (error) {
-      setErrorMessage(error.message);
-      setIsSigningUp(false);
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        setIsSigningIn(true);
+        try {
+            await doCreateUserwithEmailAndPassword(email, password);
+            userLoggedIn();
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
     }
-  };
 
-  const handleGoogleSignIn = async () => {
-    setIsGoogleSignIn(true);
-    try {
-      const userCredential = await signInWithGoogle();
-      const user = userCredential.user;
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (!userDoc.exists()) {
-        // Prompt for username if not set
-        setIsGoogleSignIn(false);
-        setIsSigningUp(true);
-      } else {
-        setIsGoogleSignIn(false);
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-      setIsGoogleSignIn(false);
+    const onGoogleSignIn = async (e) => {
+        e.preventDefault();
+        setIsSigningIn(true);
+        try {
+            await doSignInWithGoogle();
+            userLoggedIn();
+        } catch (error) {
+            setErrorMessage(error.message);
+            setIsSigningIn(false);
+        }
     }
-  };
 
-  const handleUsernameSubmit = async (e) => {
-    e.preventDefault();
-    setIsSigningUp(true);
-    try {
-      const user = currentUser;
-      await setDoc(doc(db, 'users', user.uid), {
-        username,
-        email: user.email
-      });
-      setIsSigningUp(false);
-    } catch (error) {
-      setErrorMessage(error.message);
-      setIsSigningUp(false);
-    }
-  };
-
-  if (currentUser && !isSigningUp) {
-    return <Navigate to="/Home" />;
-  }
-
-  return (
-    <div>
-      <img src="../assets/bitsore3.png" height="90px"/>
-      <div className="Authbox">
-        <h2>Sign Up for Bit-Store</h2>
-        {!isSigningUp && !isGoogleSignIn && (
-          <form onSubmit={onSubmit}>
-            <p><label htmlFor="Username">Username</label></p>
-            <input
-              type="text"
-              name="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <p><label htmlFor="Email">Email</label></p>
-            <input
-              type="email"
-              name="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <p><label htmlFor="Password">Password</label></p>
-            <input
-              type="password"
-              name="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <p></p>
-            <input className="submit" type="submit" name="Signup" value="Sign Up" disabled={isSigningUp} />
-          </form>
-        )}
-        {isGoogleSignIn && (
-          <div>
-            <p>Signing in with Google...</p>
-          </div>
-        )}
-        {isSigningUp && !isGoogleSignIn && (
-          <form onSubmit={handleUsernameSubmit}>
-            <p><label htmlFor="Username">Set Username</label></p>
-            <input
-              type="text"
-              name="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <p></p>
-            <input className="submit" type="submit" name="SetUsername" value="Set Username" disabled={isSigningUp} />
-          </form>
-        )}
-        {errorMessage && <p>{errorMessage}</p>}
-        {!isSigningUp && !isGoogleSignIn && (
-          <button onClick={handleGoogleSignIn} disabled={isSigningUp}>Sign in with Google</button>
-        )}
-      </div>
-      <p></p>
-      <div className="linkbox">
-        <h5>Already have an account? <Link to="/Login"><p>Login</p></Link></h5>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <form onSubmit={onSubmit}>
+                <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                />
+                <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                />
+                <button type="submit" disabled={isSigningIn}>
+                    Sign Up
+                </button>
+                {errorMessage && <p>{errorMessage}</p>}
+            </form>
+            <button onClick={onGoogleSignIn} disabled={isSigningIn}>Sign up with Google</button>
+        </div>
+    );
 }
 
 export default Signup;
