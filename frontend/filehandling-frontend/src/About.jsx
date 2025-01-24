@@ -14,7 +14,7 @@ function About() {
             </a>
           </div>
           <ul>
-            <li><Link to="/About">About</Link></li>
+            <li><Link to="/Home">Home</Link></li>
             <button><Link to="/login">Login</Link></button>
             <button><Link to="/signup">Sign Up</Link></button>
           </ul>

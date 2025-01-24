@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from './contexts/authContext';
 import './css/styles.css';
 
 function Home() {
+  const { logout } = useAuth();
+
   const openNav = () => {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
@@ -13,21 +16,24 @@ function Home() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
+
   return (
     <div>
       <nav className="navbar">
         <div className="navdiv">
           <div id="mySidebar" className="sidebar">
-            {//eslint-disable-next-line
-            } <a href="#" className="closebtn" onClick={closeNav}>×</a>
-            {
-            }<a href="./Teams">Teams</a>
-            {
-            }<a href="./Documents">Projects</a>
-            {
-            }<a href="./Settings">Settings</a>
-            {//eslint-disable-next-line
-            }<a href="#">Filler</a>
+            <a href="#" className="closebtn" onClick={closeNav}>×</a>
+            <Link to="/Invitations">Invitations</Link>
+            <Link to="/Projects">Projects</Link>
+            <Link to="/Settings">Settings</Link>
+            <button onClick={handleLogout} className="logout-btn">Sign Out</button>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>
@@ -37,14 +43,9 @@ function Home() {
               <img src="/assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
             </Link>
           </div>
-          <ul>
-            <li><Link to="/About">About</Link></li>
-            <button><Link to="/login">Login</Link></button>
-            <button><Link to="/signup">Sign Up</Link></button>
-          </ul>
         </div>
       </nav>
-      <h1>About Bit-Store</h1>
+      <h1>Welcome to Bit-Store</h1>
       <p>Bit-Store will store NASA HUNCH projects in a safe and protected environment.</p>
       <h1>Not Just A Repository</h1>
       <p>Bit-Store will allow file sharing and version control and perform automated back-ups</p>
