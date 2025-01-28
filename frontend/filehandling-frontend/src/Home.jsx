@@ -33,14 +33,14 @@ function Home() {
             <Link to="/Invitations">Invitations</Link>
             <Link to="/Projects">Projects</Link>
             <Link to="/Settings">Settings</Link>
-            <button onClick={handleLogout} className="logout-btn">Sign Out</button>
+            <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>
           </div>
           <div className="logo">
             <Link to="/">
-              <img src="/assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+              <img src="./assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
             </Link>
           </div>
         </div>

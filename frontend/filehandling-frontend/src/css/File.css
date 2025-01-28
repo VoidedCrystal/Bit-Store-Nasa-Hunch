@@ -1,4 +1,7 @@
 .FileDiv{
-    display:inline-block
-    
+    display:inline-block;
+    border-radius: 5px;
+    border-color:white;
+    width: 20px;
+    height: 20px;
 }
