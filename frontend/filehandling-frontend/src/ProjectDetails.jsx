@@ -4,6 +4,8 @@ import { useAuth } from './contexts/authContext';
 import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
+import './css/File.css';
+import './css/styles.css';
 
 function ProjectDetails() {
   const { projectId } = useParams();
@@ -48,6 +50,25 @@ function ProjectDetails() {
 
   return (
     <div>
+      <nav className="navbar">
+        <div className="navdiv">
+          <div id="mySidebar" className="sidebar">
+            <a href="#" className="closebtn" onClick={closeNav}>×</a>
+            <Link to="/Invitations">Invitations</Link>
+            <Link to="/Projects">Projects</Link>
+            <Link to="/Settings">Settings</Link>
+            <button onClick={handleLogout} className="logout-btn">Sign Out</button>
+          </div>
+          <div id="main">
+            <button className="openbtn" onClick={openNav}>☰</button>
+          </div>
+          <div className="logo">
+            <Link to="/">
+              <img src="/assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+            </Link>
+          </div>
+        </div>
+      </nav>
       {project ? (
         <>
           <h2>{project.projectName}</h2>
@@ -56,9 +77,9 @@ function ProjectDetails() {
             {project.files && project.files.length > 0 ? (
               <ul>
                 {project.files.map((file, index) => (
-                  <li key={index}>
+                  <div className="FileDiv"><li key={index}>
                     <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
-                  </li>
+                  </li></div>
                 ))}
               </ul>
             ) : (

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
 import { db } from './firebase/firebase'; // Import Firestore
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'; // Import Firestore functions
+import './css/File.css';
 
 function Projects() {
   const { currentUser } = useAuth();
