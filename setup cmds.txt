@@ -42,3 +42,5 @@ npm start
 # Deploy with
 npm run build
 firebase deploy
+
+use npx instead of npm if firebase decides not to work.

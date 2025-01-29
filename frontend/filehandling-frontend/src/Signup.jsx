@@ -120,7 +120,7 @@ function Signup() {
         )}
         {errorMessage && <p>{errorMessage}</p>}
         {!isSigningUp && !isGoogleSignIn && (
-          <button onClick={handleGoogleSignIn} disabled={isSigningUp}>Sign in with Google</button>
+          <button onClick={handleGoogleSignIn} disabled={isSigningUp}> <img src="../assets/GoogleLogo.png"/>Sign in with Google</button>
         )}
       </div>
       <p></p>

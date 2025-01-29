@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
 import { db } from './firebase/firebase'; // Import Firestore
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'; // Import Firestore functions
+import {openNav, closeNav} from Home;
 import './css/File.css';
+import './css/styles.css'
+import Home from './Home';
 
 function Projects() {
   const { currentUser } = useAuth();
@@ -64,6 +67,25 @@ function Projects() {
 
   return (
     <div>
+      <nav className="navbar">
+        <div className="navdiv">
+          <div id="mySidebar" className="sidebar">
+            <a href="#" className="closebtn" onClick={closeNav}>×</a>
+            <Link to="/Invitations">Invitations</Link>
+            <Link to="/Projects">Projects</Link>
+            <Link to="/Settings">Settings</Link>
+            <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
+          </div>
+          <div id="main">
+            <button className="openbtn" onClick={openNav}>☰</button>
+          </div>
+          <div className="logo">
+            <Link to="/">
+            <img src="../assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+            </Link>
+          </div>
+        </div>
+      </nav>
       <h2>Projects</h2>
       <div>
         <input

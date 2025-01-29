@@ -40,7 +40,7 @@ function Home() {
           </div>
           <div className="logo">
             <Link to="/">
-              <img src="./assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+              <img src="../assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
             </Link>
           </div>
         </div>

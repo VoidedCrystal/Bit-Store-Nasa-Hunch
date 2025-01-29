@@ -4,8 +4,10 @@ import { useAuth } from './contexts/authContext';
 import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
+import {openNav, closeNav} from Home;
 import './css/File.css';
 import './css/styles.css';
+import Home from './Home';
 
 function ProjectDetails() {
   const { projectId } = useParams();
