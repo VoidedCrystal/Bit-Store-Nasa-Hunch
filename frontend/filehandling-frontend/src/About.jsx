@@ -9,9 +9,9 @@ function About() {
       <nav className="navbar">
         <div className="navdiv">
           <div className="logo">
-            <a href="./style.css">
+            <Link to="/">
               <img src="/assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
-            </a>
+            </Link>
           </div>
           <ul>
             <li><Link to="/Home">Home</Link></li>
