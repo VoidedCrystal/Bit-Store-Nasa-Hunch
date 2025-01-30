@@ -36,8 +36,8 @@ npm install firebase
 npm install -g firebase-tools
 npm install
 
-# Run with
-npm start
+# Run dev build with
+firebase emulators:start
 
 # Deploy with
 npm run build
