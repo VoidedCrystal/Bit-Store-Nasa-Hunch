@@ -8,6 +8,7 @@ import Signup from './Signup';
 import Projects from './Projects';
 import ProjectDetails from './ProjectDetails';
 import Invitations from './Invitations';
+import Settings from './Settings';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/Invitations" element={<Invitations />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/preview/:id/:url" element={<Preview />} />
+      <Route path="/Settings" element={<Settings />} />
     </Routes>
   );
 }

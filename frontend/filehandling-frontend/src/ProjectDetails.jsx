@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useAuth } from './contexts/authContext';
+import { useAuth, AuthProvider } from './contexts/authContext';
 import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
@@ -24,14 +24,6 @@ function ProjectDetails() {
   const closeNav = () => {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Failed to log out:", error);
-    }
   };
 
   useEffect(() => {
@@ -77,7 +69,6 @@ function ProjectDetails() {
             <Link to="/Invitations">Invitations</Link>
             <Link to="/Projects">Projects</Link>
             <Link to="/Settings">Settings</Link>
-            <button onClick={handleLogout} className="logout-btn">Sign Out</button>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>

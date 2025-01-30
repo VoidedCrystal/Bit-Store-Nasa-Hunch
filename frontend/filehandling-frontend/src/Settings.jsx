@@ -16,14 +16,6 @@ function Settings() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Failed to log out:", error);
-    }
-  };
-
 
   return (
     <div>
@@ -34,7 +26,6 @@ function Settings() {
                   <Link to="/Invitations">Invitations</Link>
                   <Link to="/Projects">Projects</Link>
                   <Link to="/Settings">Settings</Link>
-                  <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
                 </div>
                 <div id="main">
                   <button className="openbtn" onClick={openNav}>☰</button>

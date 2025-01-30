@@ -24,14 +24,6 @@ function Projects() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Failed to log out:", error);
-    }
-  };
-
   useEffect(() => {
     const fetchProjects = async () => {
       if (currentUser) {
@@ -91,7 +83,6 @@ function Projects() {
             <Link to="/Invitations">Invitations</Link>
             <Link to="/Projects">Projects</Link>
             <Link to="/Settings">Settings</Link>
-            <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>
