@@ -1,0 +1,18 @@
+[debug] [2025-01-30T17:23:55.994Z] ----------------------------------------------------------------------
+[debug] [2025-01-30T17:23:55.997Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kel\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start
+[debug] [2025-01-30T17:23:55.997Z] CLI Version:   13.29.2
+[debug] [2025-01-30T17:23:55.998Z] Platform:      win32
+[debug] [2025-01-30T17:23:55.998Z] Node Version:  v20.17.0
+[debug] [2025-01-30T17:23:55.998Z] Time:          Thu Jan 30 2025 10:23:55 GMT-0700 (Mountain Standard Time)
+[debug] [2025-01-30T17:23:55.998Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-01-30T17:23:56.234Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-01-30T17:23:56.234Z] > authorizing via signed-in user (leoke073@gmail.com)
+[info] i  emulators: Starting emulators: hosting {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: hosting"}}
+[debug] [2025-01-30T17:23:56.244Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-01-30T17:23:56.244Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2025-01-30T17:23:56.244Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5000}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2025-01-30T17:23:56.249Z] [hub] writing locator at C:\Users\kel\AppData\Local\Temp\hub-bit-store-d48f7.json
+[debug] [2025-01-30T17:23:56.269Z] Checked if tokens are valid: true, expires at: 1738261328140
+[debug] [2025-01-30T17:23:56.269Z] Checked if tokens are valid: true, expires at: 1738261328140
+[debug] [2025-01-30T17:23:56.270Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/bit-store-d48f7/sites 

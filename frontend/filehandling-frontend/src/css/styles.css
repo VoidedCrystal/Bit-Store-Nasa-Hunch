@@ -24,7 +24,7 @@ p {
 	text-align: center;
 }
 
-/* About Me Text */
+/* About Text */
 .fade-in-text {
 	animation: fadeIn 2s;
 }  
@@ -183,6 +183,9 @@ button a{
 	color: #CB22FF;
 	font-weight: bold;
 	font-size: 15px;
+}
+.login-button{
+	float: right
 }
 
 
