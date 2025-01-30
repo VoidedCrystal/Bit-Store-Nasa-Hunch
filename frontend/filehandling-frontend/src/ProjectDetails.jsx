@@ -4,7 +4,7 @@ import { useAuth } from './contexts/authContext';
 import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
 import { doc, getDoc, updateDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
-import {openNav, closeNav} from Home;
+import { Link } from 'react-router-dom';
 import './css/File.css';
 import './css/styles.css';
 import Home from './Home';
@@ -15,6 +15,24 @@ function ProjectDetails() {
   const [project, setProject] = useState(null);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
+
+  const openNav = () => {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  };
+
+  const closeNav = () => {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchProject = async () => {

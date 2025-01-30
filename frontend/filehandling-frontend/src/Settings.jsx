@@ -1,10 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import {openNav, closeNav} from Home;
+import { useAuth } from './contexts/authContext';
 import './css/styles.css';
 import Home from './Home';
 
 function Settings() {
+  
+    const openNav = () => {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  };
+
+  const closeNav = () => {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
+
+
   return (
     <div>
       <nav className="navbar">

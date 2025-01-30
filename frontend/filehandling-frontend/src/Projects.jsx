@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
 import { db } from './firebase/firebase'; // Import Firestore
 import { collection, addDoc, getDocs, query, where } from 'firebase/firestore'; // Import Firestore functions
-import {openNav, closeNav} from Home;
 import './css/File.css';
 import './css/styles.css'
 import Home from './Home';
@@ -14,6 +13,24 @@ function Projects() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [projects, setProjects] = useState([]);
+
+  const openNav = () => {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  };
+
+  const closeNav = () => {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchProjects = async () => {
