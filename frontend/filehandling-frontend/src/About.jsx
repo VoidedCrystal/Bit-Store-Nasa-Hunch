@@ -15,9 +15,7 @@ function About() {
           </div>
           <ul>
             <li><Link to="/Home">Home</Link></li>
-            <div className="login-button">
             <button><Link to="/login">Login</Link></button>
-            </div>
             <button><Link to="/signup">Sign Up</Link></button>
           </ul>
         </div>
