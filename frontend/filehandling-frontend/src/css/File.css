@@ -1,5 +1,5 @@
 .FileDiv{
-    display:inline-block;
+    display:inline-table;
     border-radius: 5px;
     border-color:rgb(0, 0, 0);
     width: 20px;
