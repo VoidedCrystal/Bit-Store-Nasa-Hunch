@@ -6,7 +6,7 @@
 
 /* Background */
 body {
-	background-color: #2f2f2f;
+	background-color: #1b1b1b;
 }
 
 /* Pop Up Box */
@@ -24,7 +24,7 @@ p {
 	text-align: center;
 }
 
-/* About Text */
+/* About Me Text */
 .fade-in-text {
 	animation: fadeIn 2s;
 }  
@@ -183,9 +183,6 @@ button a{
 	color: #CB22FF;
 	font-weight: bold;
 	font-size: 15px;
-}
-.login-button{
-	float: right
 }
 
 

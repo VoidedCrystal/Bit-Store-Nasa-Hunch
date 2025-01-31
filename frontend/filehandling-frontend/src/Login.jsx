@@ -65,7 +65,7 @@ function Login() {
           <input className="submit" type="submit" name="Login" value="Login" disabled={isSigningIn} />
         </form>
         {errorMessage && <p>{errorMessage}</p>}
-        <button onClick={onGoogleSignIn} disabled={isSigningIn}><img src="../assets/GoogleLogo.png" height="100px" width="100px"/>Sign in with Google</button>
+        <button onClick={onGoogleSignIn} disabled={isSigningIn} className='Google'><div><img src="../assets/GoogleLogo.png" alt="google logo" height="30px"/></div><span className='Google'>Sign in with Google</span></button>
       </div>
       <p></p>
       <div className="linkbox">

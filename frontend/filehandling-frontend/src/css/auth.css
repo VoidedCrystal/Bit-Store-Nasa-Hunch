@@ -84,3 +84,16 @@ input {
 #Register input{
 	width:290px;
 }
+.Google div{
+	display: inline;
+	float:left;
+}
+.Google span{
+	padding-top: 10px;
+	padding-bottom: 1px;
+	text-align: bottom;
+	float:right;
+}
+.Google button{
+	padding-top: 10px;
+}
