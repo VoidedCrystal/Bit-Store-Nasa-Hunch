@@ -1,9 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { auth } from '../../firebase/firebase';
-import { onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail as firebaseUpdateEmail, updatePassword as firebaseUpdatePassword } from 'firebase/auth';
-import { setDoc, doc } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
-import { doSignInWithGoogle } from '../../firebase/auth'; // Import the Google sign-in function
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { auth, db } from '../../firebase/firebase'; // Import Firebase Auth and Firestore
+import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail as firebaseUpdateEmail, updatePassword as firebaseUpdatePassword } from 'firebase/auth'; // Import Firebase Auth functions
+import { doc, setDoc } from 'firebase/firestore'; // Import Firestore functions
 
 const AuthContext = createContext();
 
@@ -12,12 +10,16 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
+      if (user && user.emailVerified) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
       setLoading(false);
     });
 
@@ -31,12 +33,8 @@ export function AuthProvider({ children }) {
       username,
       email
     });
+    await sendEmailVerification(user); // Send email verification
     setCurrentUser(user);
-  };
-
-  const signInWithGoogle = async () => {
-    const userCredential = await doSignInWithGoogle();
-    return userCredential;
   };
 
   const login = (email, password) => {
@@ -62,7 +60,6 @@ export function AuthProvider({ children }) {
   const value = {
     currentUser,
     signup,
-    signInWithGoogle,
     login,
     logout,
     resetPassword,

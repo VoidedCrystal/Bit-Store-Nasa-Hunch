@@ -1,0 +1,52 @@
+/* Ensure that list items are displayed as block elements */
+ul li {
+    display: block;
+  }
+  
+  /* Make the text color of members white */
+  .members-list li {
+    color: white;
+  }
+  
+  /* Style for the file list similar to GitHub */
+  .file-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .file-list li {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e1e4e8;
+  }
+  
+  .file-list li a {
+    text-decoration: none;
+    color: #0366d6;
+    margin-left: 8px;
+  }
+  
+  .file-icon {
+    width: 16px;
+    height: 16px;
+    fill: #586069;
+  }
+  
+  /* Style for the file upload section */
+  .file-upload-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .file-upload-section input[type="file"] {
+    display: none;
+  }
+  
+  .file-upload-section label {
+    margin-left: 8px;
+    cursor: pointer;
+    color: #0366d6;
+    text-decoration: underline;
+  }

@@ -32,7 +32,6 @@ function Signup() {
       const user = userCredential.user;
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) {
-        // Prompt for username if not set
         setIsGoogleSignIn(false);
         setIsSigningUp(true);
       } else {
