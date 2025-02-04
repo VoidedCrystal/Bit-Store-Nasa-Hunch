@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
 import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
 import { doc, getDoc, updateDoc, deleteDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
 import './css/project-details.css'; // Import the CSS file
+import './css/styles.css';
 
 function ProjectDetails() {
   const { projectId } = useParams();
@@ -15,6 +16,7 @@ function ProjectDetails() {
   const [message, setMessage] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
+  const { logout } = useAuth();
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -89,12 +91,49 @@ function ProjectDetails() {
     }
   };
 
+  const openNav = () => {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  };
+
+  const closeNav = () => {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
+
   const isAdmin = project?.members.some(member => member.email === currentUser.email && member.role === 'admin');
   const isEditor = project?.members.some(member => member.email === currentUser.email && member.role === 'editor');
   const isViewer = project?.members.some(member => member.email === currentUser.email && member.role === 'viewer');
 
   return (
     <div>
+      <nav className="navbar">
+        <div className="navdiv">
+          <div id="mySidebar" className="sidebar">
+            <a href="#" className="closebtn" onClick={closeNav}>×</a>
+            <Link to="/Invitations">Invitations</Link>
+            <Link to="/Projects">Projects</Link>
+            <Link to="/Settings">Settings</Link>
+            <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
+          </div>
+          <div id="main">
+            <button className="openbtn" onClick={openNav}>☰</button>
+          </div>
+          <div className="logo">
+            <Link to="/">
+              <img src="../assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+            </Link>
+          </div>
+        </div>
+      </nav>
       {project ? (
         <>
           <h2>{project.projectName}</h2>
