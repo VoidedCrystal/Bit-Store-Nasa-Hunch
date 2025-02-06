@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
-import { db, storage } from './firebase/firebase'; // Import Firestore and Storage
-import { doc, getDoc, updateDoc, deleteDoc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'; // Import Storage functions
-import './css/project-details.css'; // Import the CSS file
-import './css/styles.css';
+import { db, storage } from './firebase/firebase';
+import { doc, getDoc, updateDoc, arrayUnion, collection, addDoc, deleteDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid'; // Import UUID library
+import './css/project-details.css';
 
 function ProjectDetails() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  const { currentUser, handleLogout } = useAuth();
   const [project, setProject] = useState(null);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
-  const { logout } = useAuth();
+  const [email, setEmail] = useState('');
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -24,15 +24,7 @@ function ProjectDetails() {
         const projectRef = doc(db, 'projects', projectId);
         const projectDoc = await getDoc(projectRef);
         if (projectDoc.exists()) {
-          const projectData = projectDoc.data();
-          // Check if members are in the correct format
-          if (projectData.members && projectData.members.length > 0 && typeof projectData.members[0] === 'string') {
-            // Convert members to the correct format
-            const updatedMembers = projectData.members.map(email => ({ email }));
-            await updateDoc(projectRef, { members: updatedMembers });
-            projectData.members = updatedMembers;
-          }
-          setProject({ id: projectDoc.id, ...projectData });
+          setProject({ id: projectDoc.id, ...projectDoc.data() });
         }
       }
     };
@@ -44,19 +36,45 @@ function ProjectDetails() {
     if (!file) return;
 
     try {
-      const fileRef = ref(storage, `projects/${projectId}/${file.name}`);
+      const fileId = uuidv4(); // Generate a unique ID for the file
+      const fileRef = ref(storage, `projects/${projectId}/${fileId}`);
       await uploadBytes(fileRef, file);
       const fileURL = await getDownloadURL(fileRef);
 
       const projectRef = doc(db, 'projects', projectId);
       await updateDoc(projectRef, {
-        files: arrayUnion({ name: file.name, url: fileURL })
+        files: arrayUnion({ id: fileId, name: file.name, url: fileURL })
       });
 
       setMessage(`File "${file.name}" uploaded successfully`);
       setFile(null);
+      const projectDoc = await getDoc(projectRef);
+      setProject({ id: projectDoc.id, ...projectDoc.data() }); // Update project details
     } catch (error) {
       setMessage(`Failed to upload file: ${error.message}`);
+    }
+  };
+
+  const handleDeleteProject = async () => {
+    try {
+      const projectRef = doc(db, 'projects', projectId);
+      const projectDoc = await getDoc(projectRef);
+      if (projectDoc.exists()) {
+        const files = projectDoc.data().files || [];
+        // Delete all files from Firebase Storage
+        for (const file of files) {
+          const fileRef = ref(storage, file.url);
+          await deleteObject(fileRef);
+        }
+        // Delete the project document from Firestore
+        await deleteDoc(projectRef);
+        setMessage('Project deleted successfully');
+        navigate('/Projects'); // Redirect to the projects list after deletion
+      } else {
+        setMessage('No such project exists');
+      }
+    } catch (error) {
+      setMessage(`Failed to delete project: ${error.message}`);
     }
   };
 
@@ -74,26 +92,28 @@ function ProjectDetails() {
       setMessage(`Role "${selectedRole}" assigned to ${selectedUser}`);
       setSelectedUser('');
       setSelectedRole('');
+      const projectDoc = await getDoc(projectRef);
+      setProject({ id: projectDoc.id, ...projectDoc.data() }); // Update project details
     } catch (error) {
       setMessage(`Failed to assign role: ${error.message}`);
     }
   };
 
-  const handleDeleteProject = async () => {
+  const sendInvitation = async () => {
+    if (!email) return;
+
     try {
-      const projectRef = doc(db, 'projects', projectId);
-      await deleteDoc(projectRef);
-
-      setMessage('Project deleted successfully');
-      navigate('/projects');
+      const invitationsRef = collection(db, 'invitations');
+      await addDoc(invitationsRef, {
+        projectId,
+        email,
+        status: 'pending'
+      });
+      setMessage(`Invitation sent to ${email}`);
+      setEmail('');
     } catch (error) {
-      setMessage(`Failed to delete project: ${error.message}`);
+      setMessage(`Failed to send invitation: ${error.message}`);
     }
-  };
-
-  const openNav = () => {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
   };
 
   const closeNav = () => {
@@ -101,12 +121,9 @@ function ProjectDetails() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error("Failed to log out:", error);
-    }
+  const openNav = () => {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
   };
 
   const isAdmin = project?.members.some(member => member.email === currentUser.email && member.role === 'admin');
@@ -154,7 +171,7 @@ function ProjectDetails() {
                   <svg className="file-icon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
                     <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 4.42 3.58 8 8 8s8-3.58 8-8c0-4.42-3.58-8-8-8zM4 7h8v2H4V7z"></path>
                   </svg>
-                  <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
+                  <Link to={`/preview/${projectId}/${file.id}`}>{file.name}</Link>
                 </li>
               ))}
             </ul>
@@ -191,10 +208,22 @@ function ProjectDetails() {
                 <option value="viewer">Viewer</option>
               </select>
               <button onClick={handleRoleAssignment}>Assign Role</button>
-              <button onClick={handleDeleteProject}>Delete Project</button>
             </div>
           ) : null}
+          <div>
+            <h3>Invite Members</h3>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+            />
+            <button onClick={sendInvitation}>Send Invitation</button>
+          </div>
           {message && <p>{message}</p>}
+          {(isAdmin || currentUser.email === project.createdBy) && (
+            <button onClick={handleDeleteProject} className="delete-project-btn">Delete Project</button>
+          )}
         </>
       ) : (
         <p>Loading project details...</p>

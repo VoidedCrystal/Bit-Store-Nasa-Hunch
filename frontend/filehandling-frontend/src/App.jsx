@@ -21,7 +21,7 @@ function App() {
       <Route path="/projects/:projectId" element={<ProjectDetails />} />
       <Route path="/Invitations" element={<Invitations />} />
       <Route path="/Home" element={<Home />} />
-      <Route path="/preview/:id/:url" element={<Preview />} />
+      <Route path="/preview/:projectId/:fileId" element={<Preview />} />
       <Route path="/Settings" element={<Settings />} />
     </Routes>
   );
