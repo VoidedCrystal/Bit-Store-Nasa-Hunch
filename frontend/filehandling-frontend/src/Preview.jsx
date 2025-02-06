@@ -1,61 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { db, storage } from './firebase/firebase';
+import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { ref, getDownloadURL, deleteObject } from 'firebase/storage';
 
 function Preview() {
-  const { id, url } = useParams();
-  const decodedUrl = decodeURIComponent(url);
+  const { projectId, fileId } = useParams();
   const navigate = useNavigate();
+  const [fileUrl, setFileUrl] = useState('');
+  const [fileName, setFileName] = useState('');
 
-  console.log('Previewing file from URL:', decodedUrl); // Debugging: Log the decoded URL
-  console.log('Document ID:', id); // Debugging: Log the document ID
-
-  const handleDownload = () => {
-    fetch(decodedUrl, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/octet-stream',
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+  useEffect(() => {
+    const fetchFile = async () => {
+      try {
+        const projectRef = doc(db, 'projects', projectId);
+        const projectDoc = await getDoc(projectRef);
+        if (projectDoc.exists()) {
+          const file = projectDoc.data().files.find(f => f.id === fileId);
+          if (file) {
+            setFileUrl(file.url);
+            setFileName(file.name);
+          } else {
+            console.error('No such file!');
+          }
+        } else {
+          console.error('No such document!');
         }
-        return response.blob();
-      })
-      .then(blob => {
-        const downloadUrl = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.style.display = 'none';
-        a.href = downloadUrl;
-        a.download = decodedUrl.split('/').pop();
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(downloadUrl);
-      })
-      .catch(err => console.error('Error downloading the file:', err));
+      } catch (error) {
+        console.error('Error fetching document:', error);
+      }
+    };
+
+    fetchFile();
+  }, [projectId, fileId]);
+
+  const handleDownload = async () => {
+    try {
+      const downloadUrl = await getDownloadURL(ref(storage, fileUrl));
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = downloadUrl;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+    }
   };
 
-  const handleDelete = () => {
-    console.log('Deleting document with ID:', id); // Debugging: Log the document ID
-    fetch(`http://127.0.0.1:8000/api/documents/${id}/`, {
-      method: 'DELETE',
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+  const handleDelete = async () => {
+    try {
+      const projectRef = doc(db, 'projects', projectId);
+      const projectDoc = await getDoc(projectRef);
+      if (projectDoc.exists()) {
+        const updatedFiles = projectDoc.data().files.filter(f => f.id !== fileId);
+        await updateDoc(projectRef, { files: updatedFiles });
+        await deleteObject(ref(storage, fileUrl));
         navigate('/'); // Redirect to the documents list after deletion
-      })
-      .catch(err => console.error('Error deleting the file:', err));
+      } else {
+        console.error('No such document!');
+      }
+    } catch (error) {
+      console.error('Error deleting the file:', error);
+    }
   };
 
   return (
     <div>
       <h1>Preview</h1>
-      {decodedUrl.endsWith('.pdf') ? (
-        <embed src={decodedUrl} width="600" height="500" type="application/pdf" />
+      {fileUrl.endsWith('.pdf') ? (
+        <embed src={fileUrl} width="600" height="500" type="application/pdf" />
       ) : (
-        <img src={decodedUrl} alt="Preview" width="600" />
+        <img src={fileUrl} alt="Preview" width="600" />
       )}
       <button onClick={handleDownload}>Download</button>
       <button onClick={handleDelete}>Delete</button>
