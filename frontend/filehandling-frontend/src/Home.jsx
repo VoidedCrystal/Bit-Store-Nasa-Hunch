@@ -33,7 +33,7 @@ function Home() {
             <Link to="/Invitations">Invitations</Link>
             <Link to="/Projects">Projects</Link>
             <Link to="/Settings">Settings</Link>
-            <button onClick={handleLogout} className="logout-btn" to="/About">Sign Out</button>
+            <Link to="/About"><button onClick={handleLogout} className="logout-btn" >Sign Out</button></Link>
           </div>
           <div id="main">
             <button className="openbtn" onClick={openNav}>☰</button>
