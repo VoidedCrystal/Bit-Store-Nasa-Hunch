@@ -56,6 +56,7 @@ input {
 	padding-right: 1%;
 	padding-left: 1%;
 }
+
 .linkbox
 {
 	margin:auto;
@@ -77,23 +78,28 @@ input {
 #Register{
 	width: 303px
 }
+
 #Register .submit{
 	width: 303px
 
 }
+
 #Register input{
 	width:290px;
 }
+
 .Google div{
 	display: inline;
 	float:left;
 }
+
 .Google span{
 	padding-top: 10px;
 	padding-bottom: 1px;
 	text-align: bottom;
 	float:right;
 }
+
 .Google button{
 	padding-top: 10px;
 }
