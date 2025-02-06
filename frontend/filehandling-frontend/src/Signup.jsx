@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { useAuth } from './contexts/authContext';
 import { Link, Navigate } from 'react-router-dom';
 import { db } from './firebase/firebase'; // Import Firestore
-import { doc, getDoc, setDoc } from 'firebase/firestore'; // Import Firestore functions
+import { doc, getDoc, setDoc} from 'firebase/firestore'; // Import Firestore functions
 import './css/auth.css';
+import { doSignInWithGoogle } from './firebase/auth'
 
 function Signup() {
   const { signup, currentUser, signInWithGoogle } = useAuth();
@@ -28,7 +29,7 @@ function Signup() {
   const handleGoogleSignIn = async () => {
     setIsGoogleSignIn(true);
     try {
-      const userCredential = await signInWithGoogle();
+      const userCredential = await doSignInWithGoogle();
       const user = userCredential.user;
       const userDoc = await getDoc(doc(db, 'users', user.uid));
       if (!userDoc.exists()) {

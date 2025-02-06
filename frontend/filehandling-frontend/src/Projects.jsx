@@ -6,6 +6,7 @@ import { collection, getDocs, addDoc } from 'firebase/firestore';
 import './css/Projects.css';
 
 function Projects() {
+  const { logout } = useAuth();
   const { currentUser } = useAuth();
   const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState('');
@@ -47,31 +48,70 @@ function Projects() {
       setMessage(`Failed to create project: ${error.message}`);
     }
   };
+  
+    const openNav = () => {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    };
+  
+    const closeNav = () => {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+    };
+  
+    const handleLogout = async () => {
+      try {
+        await logout();
+      } catch (error) {
+        console.error("Failed to log out:", error);
+      }
+    };
 
   return (
-    <div className="projects-container">
-      <input
-        type="text"
-        value={projectName}
-        onChange={(e) => setProjectName(e.target.value)}
-        placeholder="Project Name"
-        required
-      />
-      <button onClick={createProject}>Create Project</button>
-      {message && <p>{message}</p>}
-      <div>
-        <h3>Your Projects</h3>
-        {projects.length > 0 ? (
-          <ul className="projects-list">
-            {projects.map((project) => (
-              <li key={project.id}>
-                <Link to={`/projects/${project.id}`}>{project.projectName}</Link>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No projects found</p>
-        )}
+    <div>
+      <nav className="navbar">
+              <div className="navdiv">
+                <div id="mySidebar" className="sidebar">
+                  <a href="#" className="closebtn" onClick={closeNav}>×</a>
+                  <Link to="/Invitations">Invitations</Link>
+                  <Link to="/Projects">Projects</Link>
+                  <Link to="/Settings">Settings</Link>
+                  <Link to="/About"><button onClick={handleLogout} className="logout-btn" >Sign Out</button></Link>
+                </div>
+                <div id="main">
+                  <button className="openbtn" onClick={openNav}>☰</button>
+                </div>
+                <div className="logo">
+                  <Link to="/">
+                    <img src="../assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
+                  </Link>
+                </div>
+              </div>
+            </nav>
+      <div className="projects-container">
+        <input
+          type="text"
+          value={projectName}
+          onChange={(e) => setProjectName(e.target.value)}
+          placeholder="Project Name"
+          required
+        />
+        <button onClick={createProject}>Create Project</button>
+        {message && <p>{message}</p>}
+        <div>
+          <h3>Your Projects</h3>
+          {projects.length > 0 ? (
+            <ul className="projects-list">
+              {projects.map((project) => (
+                <li key={project.id}>
+                  <Link to={`/projects/${project.id}`}>{project.projectName}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No projects found</p>
+          )}
+        </div>
       </div>
     </div>
   );
