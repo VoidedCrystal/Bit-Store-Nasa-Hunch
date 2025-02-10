@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
-import { db } from './firebase/firebase'; // Import Firestore
-import { doc, getDoc, updateDoc } from 'firebase/firestore'; // Import Firestore functions
+import { db } from './firebase/firebase';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 function Settings() {
   const { currentUser } = useAuth();
@@ -29,21 +29,31 @@ function Settings() {
 
     try {
       const userRef = doc(db, 'users', currentUser.uid);
-      await updateDoc(userRef, { username });
+      const userDoc = await getDoc(userRef);
+      const userData = {
+        username,
+        email: currentUser.email,
+        userId: currentUser.uid
+      };
+      if (userDoc.exists()) {
+        await updateDoc(userRef, userData);
+      } else {
+        await setDoc(userRef, userData);
+      }
       setMessage('Username updated successfully');
     } catch (error) {
       setMessage(`Failed to update username: ${error.message}`);
     }
   };
 
-  const closeNav = () => {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-  };
-
   const openNav = () => {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
+  };
+
+  const closeNav = () => {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
   };
 
   return (

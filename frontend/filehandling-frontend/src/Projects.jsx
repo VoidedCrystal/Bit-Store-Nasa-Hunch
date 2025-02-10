@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from './contexts/authContext';
-import { db } from './firebase/firebase'; 
-import { collection, getDocs, addDoc } from 'firebase/firestore'; 
-import './css/Projects.css'; 
+import { db } from './firebase/firebase';
+import { collection, getDocs, addDoc } from 'firebase/firestore';
+import './css/Projects.css';
 
 function Projects() {
   const { logout } = useAuth();
@@ -11,6 +11,7 @@ function Projects() {
   const [projects, setProjects] = useState([]);
   const [projectName, setProjectName] = useState('');
   const [message, setMessage] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
 
   const fetchProjects = async () => {
     try {
@@ -67,6 +68,10 @@ function Projects() {
     }
   };
 
+  const filteredProjects = projects.filter(project =>
+    project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div>
       <nav className="navbar">
@@ -100,9 +105,15 @@ function Projects() {
         {message && <p>{message}</p>}
         <div>
           <h3>Your Projects</h3>
-          {projects.length > 0 ? (
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search Projects"
+          />
+          {filteredProjects.length > 0 ? (
             <ul className="projects-list">
-              {projects.map((project) => (
+              {filteredProjects.map((project) => (
                 <li key={project.id}>
                   <Link to={`/projects/${project.id}`}>{project.projectName}</Link>
                 </li>
