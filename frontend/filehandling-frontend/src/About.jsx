@@ -13,11 +13,9 @@ function About() {
               <img src="/assets/pfp-update.png" alt="Bit Store Logo" height="100px" />
             </Link>
           </div>
-          <ul>
             <li><Link to="/Home">Home</Link></li>
             <button><Link to="/login">Login</Link></button>
             <button><Link to="/signup">Sign Up</Link></button>
-          </ul>
         </div>
       </nav>
       <h1>Bit-Store</h1>

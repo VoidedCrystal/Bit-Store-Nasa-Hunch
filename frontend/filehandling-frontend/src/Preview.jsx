@@ -57,7 +57,7 @@ function Preview() {
         const updatedFiles = projectDoc.data().files.filter(f => f.id !== fileId);
         await updateDoc(projectRef, { files: updatedFiles });
         await deleteObject(ref(storage, fileUrl));
-        navigate('/'); // Redirect to the documents list after deletion
+        navigate('/projects/' + projectId);
       } else {
         console.error('No such document!');
       }
