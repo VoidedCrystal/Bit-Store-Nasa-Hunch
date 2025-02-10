@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from './contexts/authContext';
-import { db } from './firebase/firebase'; // Import Firestore
-import { collection, query, where, getDocs, updateDoc, doc, arrayUnion } from 'firebase/firestore'; // Import Firestore functions
+import { db } from './firebase/firebase';
+import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
 
 function Invitations() {
   const { currentUser } = useAuth();
   const [invitations, setInvitations] = useState([]);
-  const [message, setMessage] = useState('');
 
   useEffect(() => {
+    if (!currentUser) return;
+
     const fetchInvitations = async () => {
-      if (currentUser) {
-        const q = query(collection(db, 'invitations'), where('email', '==', currentUser.email), where('status', '==', 'pending'));
-        const querySnapshot = await getDocs(q);
-        const fetchedInvitations = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setInvitations(fetchedInvitations);
-      }
+      const invitationsRef = collection(db, 'invitations');
+      const invitationsSnapshot = await getDocs(invitationsRef);
+      const invitationsList = invitationsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const userInvitations = invitationsList.filter(invitation => invitation.email === currentUser.email && invitation.status !== 'accepted');
+      setInvitations(userInvitations);
     };
 
     fetchInvitations();
@@ -23,21 +23,23 @@ function Invitations() {
 
   const acceptInvitation = async (invitationId, projectId) => {
     try {
+      // Update the invitation status to 'accepted'
       const invitationRef = doc(db, 'invitations', invitationId);
-      const projectRef = doc(db, 'projects', projectId);
-
-      // Update the invitation status
       await updateDoc(invitationRef, { status: 'accepted' });
 
-      // Add the user to the project's members
-      await updateDoc(projectRef, {
-        members: arrayUnion(currentUser.email)
-      });
+      // Add the user to the project's members list
+      const projectRef = doc(db, 'projects', projectId);
+      const projectDoc = await getDoc(projectRef);
+      if (projectDoc.exists()) {
+        const projectData = projectDoc.data();
+        const updatedMembers = [...projectData.members, { email: currentUser.email, role: 'viewer' }];
+        await updateDoc(projectRef, { members: updatedMembers });
+      }
 
-      setMessage('Invitation accepted');
-      setInvitations(invitations.filter(invitation => invitation.id !== invitationId));
+      // Remove the accepted invitation from the state
+      setInvitations(prevInvitations => prevInvitations.filter(invitation => invitation.id !== invitationId));
     } catch (error) {
-      setMessage(`Failed to accept invitation: ${error.message}`);
+      console.error('Error accepting invitation:', error);
     }
   };
 
@@ -48,15 +50,14 @@ function Invitations() {
         <ul>
           {invitations.map(invitation => (
             <li key={invitation.id}>
-              Project ID: {invitation.projectId} - Invited by {invitation.invitedBy}
+              <p>Project ID: {invitation.projectId}</p>
               <button onClick={() => acceptInvitation(invitation.id, invitation.projectId)}>Accept</button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No pending invitations</p>
+        <p>No invitations found</p>
       )}
-      {message && <p>{message}</p>}
     </div>
   );
 }
