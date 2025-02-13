@@ -1,0 +1,7 @@
+Feedback
+
+Add Tags to Each Project to make it easier to search for them.
+Public and Private Projects?
+Make Shared and own Repositories shown in Projects Page and Also Seperated from Each Other
+True Admin to see others projects easier.
+Data Upload Size Limiter
