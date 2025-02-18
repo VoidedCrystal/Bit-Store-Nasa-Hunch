@@ -48,3 +48,8 @@ font-weight: bold;
 .projects-list a:hover {
 text-decoration: underline;
 }
+
+
+p {
+    color: white;
+ }
