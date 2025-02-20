@@ -3,4 +3,5 @@ Updates to add
 To add:
 Hierarchy of projects:
     Basically: NASA Hunch -> "NASA project" -> "User Project"
-This is for Superusers. NASA superuser -> Teacher -> Student
+This is for Superusers. NASA Superuser -> Teacher -> Student
+We want to make sure its easier for NASA to see the projects and also make sure that people can still edit their own projects
