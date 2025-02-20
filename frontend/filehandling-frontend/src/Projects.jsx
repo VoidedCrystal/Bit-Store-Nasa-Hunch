@@ -19,7 +19,7 @@ function Projects() {
       const projectsSnapshot = await getDocs(projectsRef);
       const projectsList = projectsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       console.log('Fetched projects:', projectsList);
-      const userProjects = projectsList.filter(project => 
+      const userProjects = currentUser.superadmin ? projectsList : projectsList.filter(project => 
         project.members.some(member => member.email === currentUser.email)
       );
       setProjects(userProjects);

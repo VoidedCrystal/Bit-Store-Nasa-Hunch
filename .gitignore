@@ -1,0 +1,5 @@
+# Ignore service account key file
+config/serviceAccountKey.json
+
+# Ignore environment variables file
+.env
