@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { db, storage } from './firebase/firebase';
 import { doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { ref, getDownloadURL, deleteObject } from 'firebase/storage';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function Preview() {
   const { projectId, fileId } = useParams();
@@ -76,6 +77,7 @@ function Preview() {
       )}
       <button onClick={handleDownload}>Download</button>
       <button onClick={handleDelete}>Delete</button>
+      <button><Link to={`/projects/${projectId}`}>Back</Link></button>
     </div>
   );
 }
