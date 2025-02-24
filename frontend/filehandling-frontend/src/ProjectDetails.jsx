@@ -35,23 +35,30 @@ function ProjectDetails() {
   const handleFileUpload = async () => {
     if (!file) return;
 
-    try {
-      const fileId = uuidv4(); // Generate a unique ID for the file
-      const fileRef = ref(storage, `projects/${projectId}/${fileId}`);
-      await uploadBytes(fileRef, file);
-      const fileURL = await getDownloadURL(fileRef);
+    const fileSizeLimit = 500 * 1024 * 1024; // 500MB in bytes
+    if (file.size > fileSizeLimit) {
+      setMessage('File size exceeds the 500MB limit.');
+      return;
+    }
+    else {
+      try {
+        const fileId = uuidv4(); // Generate a unique ID for the file
+        const fileRef = ref(storage, `projects/${projectId}/${fileId}`);
+        await uploadBytes(fileRef, file);
+        const fileURL = await getDownloadURL(fileRef);
 
-      const projectRef = doc(db, 'projects', projectId);
-      await updateDoc(projectRef, {
-        files: arrayUnion({ id: fileId, name: file.name, url: fileURL })
-      });
+        const projectRef = doc(db, 'projects', projectId);
+        await updateDoc(projectRef, {
+          files: arrayUnion({ id: fileId, name: file.name, url: fileURL })
+        });
 
-      setMessage(`File "${file.name}" uploaded successfully`);
-      setFile(null);
-      const projectDoc = await getDoc(projectRef);
-      setProject({ id: projectDoc.id, ...projectDoc.data() }); // Update project details
-    } catch (error) {
-      setMessage(`Failed to upload file: ${error.message}`);
+        setMessage(`File "${file.name}" uploaded successfully`);
+        setFile(null);
+        const projectDoc = await getDoc(projectRef);
+        setProject({ id: projectDoc.id, ...projectDoc.data() }); // Update project details
+      } catch (error) {
+        setMessage(`Failed to upload file: ${error.message}`);
+      }
     }
   };
 
@@ -160,7 +167,8 @@ function ProjectDetails() {
               <>
                 <input type="file" id="file-upload" onChange={(e) => setFile(e.target.files[0])} />
                 <label htmlFor="file-upload">Upload File</label>
-                <button onClick={handleFileUpload}>Upload</button>
+                <button onClick={handleFileUpload}>Upload</button> 
+                <p>500mb limit</p>
               </>
             )}
           </div>
