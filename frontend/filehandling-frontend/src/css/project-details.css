@@ -51,6 +51,22 @@ ul li {
     text-decoration: underline;
   }
 
+.tags-list .tag {
+  display: inline-block;
+  background-color: #444;
+  color: white;
+  padding: 5px 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.tags-list .tag button {
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 5px;
+  cursor: pointer;
+}
 
 h3 {
      color: white;

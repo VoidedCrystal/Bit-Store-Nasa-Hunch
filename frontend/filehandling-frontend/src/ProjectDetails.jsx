@@ -17,6 +17,8 @@ function ProjectDetails() {
   const [selectedUser, setSelectedUser] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
   const [email, setEmail] = useState('');
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState('');
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -25,6 +27,7 @@ function ProjectDetails() {
         const projectDoc = await getDoc(projectRef);
         if (projectDoc.exists()) {
           setProject({ id: projectDoc.id, ...projectDoc.data() });
+          setTags(projectDoc.data().tags || []);
         }
       }
     };
@@ -120,6 +123,37 @@ function ProjectDetails() {
       setEmail('');
     } catch (error) {
       setMessage(`Failed to send invitation: ${error.message}`);
+    }
+  };
+
+  const handleAddTag = async () => {
+    if (!newTag) return;
+
+    const formattedTag = `#${newTag.trim()}`;
+
+    try {
+      const projectRef = doc(db, 'projects', projectId);
+      const updatedTags = [...tags, formattedTag];
+      await updateDoc(projectRef, { tags: updatedTags });
+
+      setTags(updatedTags);
+      setNewTag('');
+      setMessage(`Tag "${formattedTag}" added successfully`);
+    } catch (error) {
+      setMessage(`Failed to add tag: ${error.message}`);
+    }
+  };
+
+  const handleRemoveTag = async (tagToRemove) => {
+    try {
+      const projectRef = doc(db, 'projects', projectId);
+      const updatedTags = tags.filter(tag => tag !== tagToRemove);
+      await updateDoc(projectRef, { tags: updatedTags });
+
+      setTags(updatedTags);
+      setMessage(`Tag "${tagToRemove}" removed successfully`);
+    } catch (error) {
+      setMessage(`Failed to remove tag: ${error.message}`);
     }
   };
 
@@ -227,6 +261,24 @@ function ProjectDetails() {
               placeholder="Email"
             />
             <button onClick={sendInvitation}>Send Invitation</button>
+          </div>
+          <div className="tags-section">
+            <h3>Tags</h3>
+            <div className="tags-list">
+              {tags.map((tag, index) => (
+                <span key={index} className="tag">
+                  {tag}
+                  <button onClick={() => handleRemoveTag(tag)}>x</button>
+                </span>
+              ))}
+            </div>
+            <input
+              type="text"
+              value={newTag}
+              onChange={(e) => setNewTag(e.target.value)}
+              placeholder="Add a tag"
+            />
+            <button onClick={handleAddTag}>Add Tag</button>
           </div>
           {message && <p>{message}</p>}
           {(isAdmin || currentUser.email === project.createdBy) && (

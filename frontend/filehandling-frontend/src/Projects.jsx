@@ -69,7 +69,8 @@ function Projects() {
   };
 
   const filteredProjects = projects.filter(project =>
-    project.projectName.toLowerCase().includes(searchQuery.toLowerCase())
+    project.projectName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (project.tags && project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())))
   );
 
   return (
@@ -116,6 +117,13 @@ function Projects() {
               {filteredProjects.map((project) => (
                 <li key={project.id}>
                   <Link to={`/projects/${project.id}`}>{project.projectName}</Link>
+                  {project.tags && project.tags.length > 0 && (
+                    <div className="tags-list">
+                      {project.tags.map((tag, index) => (
+                        <span key={index} className="tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
