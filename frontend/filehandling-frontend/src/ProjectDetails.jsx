@@ -272,13 +272,17 @@ function ProjectDetails() {
                 </span>
               ))}
             </div>
-            <input
-              type="text"
-              value={newTag}
-              onChange={(e) => setNewTag(e.target.value)}
-              placeholder="Add a tag"
-            />
-            <button onClick={handleAddTag}>Add Tag</button>
+            {isAdmin && (
+              <>
+                <input
+                  type="text"
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                  placeholder="Add a tag"
+                />
+                <button onClick={handleAddTag}>Add Tag</button>
+              </>
+            )}
           </div>
           {message && <p>{message}</p>}
           {(isAdmin || currentUser.email === project.createdBy) && (
