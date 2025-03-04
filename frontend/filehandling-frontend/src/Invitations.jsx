@@ -8,10 +8,11 @@ function Invitations() {
   const { logout } = useAuth();
   const { currentUser } = useAuth();
   const [invitations, setInvitations] = useState([]);
+  const [projects, setProjects] = useState({});
 
   useEffect(() => {
     if (!currentUser) return;
-
+    
     const fetchInvitations = async () => {
       const invitationsRef = collection(db, 'invitations');
       const invitationsSnapshot = await getDocs(invitationsRef);
@@ -20,7 +21,18 @@ function Invitations() {
       setInvitations(userInvitations);
     };
 
+    const fetchProjects = async () => {
+      const projectsRef = collection(db, 'projects');
+      const projectsSnapshot = await getDocs(projectsRef);
+      const projectsList = projectsSnapshot.docs.reduce((acc, doc) => {
+        acc[doc.id] = doc.data().projectName;
+        return acc;
+      }, {});
+      setProjects(projectsList);
+    };
+
     fetchInvitations();
+    fetchProjects();
   }, [currentUser]);
 
   const acceptInvitation = async (invitationId, projectId) => {
@@ -89,7 +101,7 @@ function Invitations() {
         <ul>
           {invitations.map(invitation => (
             <li key={invitation.id}>
-              <p>Project ID: {invitation.projectId}</p>
+              <p>Project Name: {projects[invitation.projectId] || 'Unknown Project'}</p>
               <button onClick={() => acceptInvitation(invitation.id, invitation.projectId)}>Accept</button>
             </li>
           ))}
