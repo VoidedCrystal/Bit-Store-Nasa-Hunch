@@ -1,0 +1,21 @@
+.invitation{
+  display: inline-block;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  border: 2px solid black;
+  margin: 10px;
+}
+
+.invitation li{
+    display: inline-block;
+    flex-direction: row;
+    justify-content: left;
+    align-items: left;
+    border-radius: 20px;
+    border-color: brown;
+    padding: 5px 10px;
+    margin: 5px;
+}
+

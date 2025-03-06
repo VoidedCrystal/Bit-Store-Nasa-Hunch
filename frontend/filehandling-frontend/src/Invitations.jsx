@@ -3,6 +3,7 @@ import { useAuth } from './contexts/authContext';
 import { db } from './firebase/firebase';
 import { Link } from 'react-router-dom';
 import { collection, getDocs, updateDoc, doc, getDoc } from 'firebase/firestore';
+import './css/Invite.css';
 
 function Invitations() {
   const { logout } = useAuth();
@@ -100,10 +101,12 @@ function Invitations() {
       {invitations.length > 0 ? (
         <ul>
           {invitations.map(invitation => (
-            <li key={invitation.id}>
-              <p>Project Name: {projects[invitation.projectId] || 'Unknown Project'}</p>
-              <button onClick={() => acceptInvitation(invitation.id, invitation.projectId)}>Accept</button>
-            </li>
+            <div className="invitation">
+              <li key={invitation.id}>
+                <p>Project Name: {projects[invitation.projectId] || 'Unknown Project'}</p>
+                <button onClick={() => acceptInvitation(invitation.id, invitation.projectId)}>Accept</button>
+              </li>
+            </div>
           ))}
         </ul>
       ) : (
