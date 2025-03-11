@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from './contexts/authContext';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { db } from './firebase/firebase'; // Import Firestore
 import { doc, getDoc, setDoc} from 'firebase/firestore'; // Import Firestore functions
 import './css/auth.css';
@@ -14,12 +14,17 @@ function Signup() {
   const [isSigningUp, setIsSigningUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isGoogleSignIn, setIsGoogleSignIn] = useState(false);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsSigningUp(true);
     try {
       await signup(email, password, username);
+      if (currentUser) {
+        return <Navigate to="/Home" />; // Redirect to /Home
+      }
+      
     } catch (error) {
       setErrorMessage(error.message);
       setIsSigningUp(false);
@@ -45,22 +50,10 @@ function Signup() {
   };
 
   const handleUsernameSubmit = async (e) => {
-    e.preventDefault();
-    setIsSigningUp(true);
-    try {
-      const user = currentUser;
-      await setDoc(doc(db, 'users', user.uid), {
-        username,
-        email: user.email
-      });
-      setIsSigningUp(false);
-    } catch (error) {
-      setErrorMessage(error.message);
-      setIsSigningUp(false);
-    }
+    return <Navigate to="/Home" />; // Redirect to /Home
   };
 
-  if (currentUser && !isSigningUp) {
+  if (currentUser) {
     return <Navigate to="/Home" />;
   }
 
@@ -103,20 +96,6 @@ function Signup() {
           <div>
             <p>Signing in with Google...</p>
           </div>
-        )}
-        {isSigningUp && !isGoogleSignIn && (
-          <form onSubmit={handleUsernameSubmit}>
-            <p><label htmlFor="Username">Set Username</label></p>
-            <input
-              type="text"
-              name="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <p></p>
-            <input className="submit" type="submit" name="SetUsername" value="Set Username" disabled={isSigningUp} />
-          </form>
         )}
         {errorMessage && <p>{errorMessage}</p>}
         {!isSigningUp && !isGoogleSignIn && (
