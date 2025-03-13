@@ -192,6 +192,17 @@ function ProjectDetails() {
           </div>
         </div>
       </nav>
+      <div className="tags-sidebar">
+            <h3>Tags</h3>
+            <div className="tags-list">
+              {tags.map((tag, index) => (
+                <span key={index} className="tag">
+                  {tag}
+                  <button onClick={() => handleRemoveTag(tag)}>x</button>
+                </span>
+              ))}
+            </div>
+          </div>
       {project ? (
         <>
           <h2>{project.projectName}</h2>
@@ -262,18 +273,9 @@ function ProjectDetails() {
             />
             <button onClick={sendInvitation}>Send Invitation</button>
           </div>
-          <div className="tags-section">
-            <h3>Tags</h3>
-            <div className="tags-list">
-              {tags.map((tag, index) => (
-                <span key={index} className="tag">
-                  {tag}
-                  <button onClick={() => handleRemoveTag(tag)}>x</button>
-                </span>
-              ))}
-            </div>
             {isAdmin && (
               <>
+                <h3>Add Tags</h3>
                 <input
                   type="text"
                   value={newTag}
@@ -283,7 +285,6 @@ function ProjectDetails() {
                 <button onClick={handleAddTag}>Add Tag</button>
               </>
             )}
-          </div>
           {message && <p>{message}</p>}
           {(isAdmin || currentUser.email === project.createdBy) && (
             <button onClick={handleDeleteProject} className="delete-project-btn">Delete Project</button>
