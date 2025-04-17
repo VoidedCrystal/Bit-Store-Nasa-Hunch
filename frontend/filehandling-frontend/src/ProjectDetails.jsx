@@ -192,7 +192,85 @@ function ProjectDetails() {
           </div>
         </div>
       </nav>
-      <div className="tags-sidebar">
+      
+      {project ? (
+        <>
+         <h2 id='Project-Name'>{project.projectName}</h2>
+          <div className="Edit-Sidebar">
+          {currentUser.email === project.createdBy || isAdmin ? (
+              <div>
+                <h3>Assign Roles</h3>
+                <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+                  <option value="">Select User</option>
+                  {project.members.map((member, index) => (
+                    <option key={index} value={member.email}>{member.email}</option>
+                  ))}
+                </select>
+                <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
+                  <option value="">Select Role</option>
+                  <option value="admin">Admin</option>
+                  <option value="editor">Editor</option>
+                  <option value="viewer">Viewer</option>
+                </select>
+                <button onClick={handleRoleAssignment}>Assign Role</button>
+              </div>
+            ) : null}
+            <div>
+              <h3>Invite Members</h3>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+              />
+              <button onClick={sendInvitation}>Send Invitation</button>
+            </div>
+              {isAdmin && (
+                <>
+                  <h3>Add Tags</h3>
+                  <input
+                    type="text"
+                    value={newTag}
+                    onChange={(e) => setNewTag(e.target.value)}
+                    placeholder="Add a tag"
+                  />
+                  <button onClick={handleAddTag}>Add Tag</button>
+                </>
+              )}
+            {message && <p>{message}</p>}
+            {(isAdmin || currentUser.email === project.createdBy) && (
+              <button onClick={handleDeleteProject} className="delete-project-btn">Delete Project</button>
+            )} 
+          </div>
+          <div className='project-files'>
+           
+            <div className="file-upload-section">
+              <h3>Files</h3>
+              {(isAdmin || isEditor) && (
+                <>
+                  <input type="file" id="file-upload" onChange={(e) => setFile(e.target.files[0])} />
+                  <label htmlFor="file-upload">Upload File</label>
+                  <button onClick={handleFileUpload}>Upload</button> 
+                  <p>500mb limit</p>
+                </>
+              )}
+            </div>
+            {project.files && project.files.length > 0 ? (
+              <ul className="file-list">
+                {project.files.map((file, index) => (
+                  <li key={index}>
+                    <svg className="file-icon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
+                      <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 4.42 3.58 8 8 8s8-3.58 8-8c0-4.42-3.58-8-8-8zM4 7h8v2H4V7z"></path>
+                    </svg>
+                    <Link to={`/preview/${projectId}/${file.id}`}>{file.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No files uploaded yet.</p>
+            )}
+          </div>
+          <div className="tags-sidebar">
             <h3>Tags</h3>
             <div className="tags-list">
               {tags.map((tag, index) => (
@@ -202,93 +280,21 @@ function ProjectDetails() {
                 </span>
               ))}
             </div>
-          </div>
-      {project ? (
-        <>
-          <h2>{project.projectName}</h2>
-          <div className="file-upload-section">
-            <h3>Files</h3>
-            {(isAdmin || isEditor) && (
-              <>
-                <input type="file" id="file-upload" onChange={(e) => setFile(e.target.files[0])} />
-                <label htmlFor="file-upload">Upload File</label>
-                <button onClick={handleFileUpload}>Upload</button> 
-                <p>500mb limit</p>
-              </>
-            )}
-          </div>
-          {project.files && project.files.length > 0 ? (
-            <ul className="file-list">
-              {project.files.map((file, index) => (
-                <li key={index}>
-                  <svg className="file-icon" viewBox="0 0 16 16" version="1.1" aria-hidden="true">
-                    <path fillRule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 4.42 3.58 8 8 8s8-3.58 8-8c0-4.42-3.58-8-8-8zM4 7h8v2H4V7z"></path>
-                  </svg>
-                  <Link to={`/preview/${projectId}/${file.id}`}>{file.name}</Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No files uploaded yet.</p>
-          )}
-          <div>
-            <h3>Members</h3>
-            {project.members && project.members.length > 0 ? (
-              <ul className="members-list">
-                {project.members.map((member, index) => (
-                  <li key={index}>
-                    {member.email} - {member.role || 'No role assigned'}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No members yet.</p>
-            )}
-          </div>
-          {currentUser.email === project.createdBy || isAdmin ? (
             <div>
-              <h3>Assign Roles</h3>
-              <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
-                <option value="">Select User</option>
-                {project.members.map((member, index) => (
-                  <option key={index} value={member.email}>{member.email}</option>
-                ))}
-              </select>
-              <select value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)}>
-                <option value="">Select Role</option>
-                <option value="admin">Admin</option>
-                <option value="editor">Editor</option>
-                <option value="viewer">Viewer</option>
-              </select>
-              <button onClick={handleRoleAssignment}>Assign Role</button>
+              <h3>Members</h3>
+              {project.members && project.members.length > 0 ? (
+                <ul className="members-list">
+                  {project.members.map((member, index) => (
+                    <li key={index}>
+                      {member.email} - {member.role || 'No role assigned'}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No members yet.</p>
+              )}
             </div>
-          ) : null}
-          <div>
-            <h3>Invite Members</h3>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-            />
-            <button onClick={sendInvitation}>Send Invitation</button>
           </div>
-            {isAdmin && (
-              <>
-                <h3>Add Tags</h3>
-                <input
-                  type="text"
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  placeholder="Add a tag"
-                />
-                <button onClick={handleAddTag}>Add Tag</button>
-              </>
-            )}
-          {message && <p>{message}</p>}
-          {(isAdmin || currentUser.email === project.createdBy) && (
-            <button onClick={handleDeleteProject} className="delete-project-btn">Delete Project</button>
-          )}
         </>
       ) : (
         <p>Loading project details...</p>

@@ -1,3 +1,4 @@
+
 /* Ensure that list items are displayed as block elements */
 ul li {
     display: block;
@@ -104,4 +105,40 @@ h3 {
   color: white;
   margin-left: 5px;
   cursor: pointer;
+}
+
+.Edit-Sidebar {
+  width: 250px;
+  height: 500px;
+  float: left;
+  background-color: #333;
+  color: white;
+  padding: 16px;
+  overflow-y: auto;
+  border: 3px solid black;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.project-files {
+  min-width: none;
+  width: 100%;
+  max-width: 1810px;
+  height: 500px;
+  float: left;
+  background-color: #333;
+  color: white;
+  padding: 16px;
+  overflow-y: auto;
+  border: 3px solid black;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+
+.project-files div {
+  display: flex;
+}
+
+#project-name {
+  text-align: center;
 }
