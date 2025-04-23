@@ -16,6 +16,8 @@ function Signup() {
   const [isGoogleSignIn, setIsGoogleSignIn] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
+
+  // Email and Password Sign Up
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsSigningUp(true);
@@ -31,6 +33,7 @@ function Signup() {
     }
   };
 
+  // Google Sign In
   const handleGoogleSignIn = async () => {
     setIsGoogleSignIn(true);
     try {
@@ -49,10 +52,13 @@ function Signup() {
     }
   };
 
+  // Handle username submission which is bypassed in the Google sign-in process
   const handleUsernameSubmit = async (e) => {
     return <Navigate to="/Home" />; // Redirect to /Home
   };
 
+  // Check if the user is already logged in
+  // If the user is logged in, redirect to the home page
   if (currentUser) {
     return <Navigate to="/Home" />;
   }

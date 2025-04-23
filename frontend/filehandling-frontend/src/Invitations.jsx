@@ -57,6 +57,7 @@ function Invitations() {
     }
   };
 
+  // Sidebar functions
   const openNav = () => {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
@@ -67,6 +68,8 @@ function Invitations() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
+  // Logout function
+  // This function is called when the user clicks the "Sign Out" button
   const handleLogout = async () => {
     try {
       await logout();

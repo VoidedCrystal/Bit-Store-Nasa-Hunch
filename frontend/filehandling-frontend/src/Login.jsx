@@ -11,6 +11,8 @@ function Login() {
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
+
+  // Email and Password Sign In
   const onSubmit = async (e) => {
     e.preventDefault();
     setIsSigningIn(true);
@@ -23,6 +25,7 @@ function Login() {
     }
   }
 
+  // Google Sign In
   const onGoogleSignIn = async (e) => {
     e.preventDefault();
     setIsSigningIn(true);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+// OLD CODE
 function Upload() {
   const [description, setDescription] = useState('');
   const [file, setFile] = useState(null);

@@ -52,6 +52,7 @@ ul li {
     text-decoration: underline;
   }
 
+/* Style for the tags list */
 .tags-list .tag {
   display: inline-block;
   background-color: #444;
@@ -73,6 +74,7 @@ h3 {
      color: white;
   }
 
+  /* Style for the members list */
 .tags-sidebar {
   width: 250px;
   height: 500px;
@@ -120,6 +122,7 @@ h3 {
   margin-left: 20px;
 }
 
+/* Style for the project files section */
 .project-files {
   min-width: none;
   width: 100%;

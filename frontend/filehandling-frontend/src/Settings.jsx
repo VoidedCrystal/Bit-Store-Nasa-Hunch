@@ -9,6 +9,7 @@ function Settings() {
   const [username, setUsername] = useState('');
   const [message, setMessage] = useState('');
 
+  // Fetch the current user's username from Firestore
   useEffect(() => {
     const fetchUserData = async () => {
       if (currentUser) {
@@ -23,6 +24,8 @@ function Settings() {
     fetchUserData();
   }, [currentUser]);
 
+  // Handle username change
+  // Update the username in Firestore
   const handleUsernameChange = async (e) => {
     e.preventDefault();
     if (!username) return;
@@ -46,6 +49,7 @@ function Settings() {
     }
   };
 
+  // Sidebar functions
   const openNav = () => {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
@@ -56,6 +60,7 @@ function Settings() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
+  
   return (
     <div>
       <nav className="navbar">

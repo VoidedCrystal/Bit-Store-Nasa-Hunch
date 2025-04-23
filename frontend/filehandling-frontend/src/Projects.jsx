@@ -13,6 +13,7 @@ function Projects() {
   const [message, setMessage] = useState('');
   const [searchQuery, setSearchQuery] = useState(''); // Add state for search query
 
+  // Fetches project from Firestore
   const fetchProjects = async () => {
     try {
       const projectsRef = collection(db, 'projects');
@@ -32,6 +33,7 @@ function Projects() {
     fetchProjects();
   }, [currentUser.email]);
 
+  // Creates a new project
   const createProject = async () => {
     if (!projectName) return;
 
@@ -50,6 +52,7 @@ function Projects() {
     }
   };
 
+  // Sidebar functions
   const openNav = () => {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
@@ -60,6 +63,7 @@ function Projects() {
     document.getElementById("main").style.marginLeft = "0";
   };
 
+  // Logout function
   const handleLogout = async () => {
     try {
       await logout();

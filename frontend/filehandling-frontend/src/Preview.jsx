@@ -11,6 +11,7 @@ function Preview() {
   const [fileUrl, setFileUrl] = useState('');
   const [fileName, setFileName] = useState('');
 
+  // Fetch the file URL and name from Firestore
   useEffect(() => {
     const fetchFile = async () => {
       try {
@@ -35,6 +36,9 @@ function Preview() {
     fetchFile();
   }, [projectId, fileId]);
 
+
+  // Handle file download and deletion
+  // Download the file from Firebase Storage
   const handleDownload = async () => {
     try {
       const downloadUrl = await getDownloadURL(ref(storage, fileUrl));
@@ -50,6 +54,7 @@ function Preview() {
     }
   };
 
+  // Delete the file from Firebase Storage and update Firestore
   const handleDelete = async () => {
     try {
       const projectRef = doc(db, 'projects', projectId);

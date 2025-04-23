@@ -9,8 +9,6 @@ body {
 	background-color: #1b1b1b;
 }
 
-/* Pop Up Box */
-
 
 /* Default Text */
 h1 {
@@ -24,7 +22,6 @@ p {
 	text-align: center;
 }
 
-/* About Me Text */
 .fade-in-text {
 	animation: fadeIn 2s;
 }  
