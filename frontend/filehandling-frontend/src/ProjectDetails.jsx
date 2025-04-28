@@ -10,7 +10,7 @@ import './css/project-details.css';
 function ProjectDetails() {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const { currentUser, handleLogout } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [project, setProject] = useState(null);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
@@ -19,6 +19,14 @@ function ProjectDetails() {
   const [email, setEmail] = useState('');
   const [tags, setTags] = useState([]);
   const [newTag, setNewTag] = useState('');
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Failed to log out:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -166,6 +174,8 @@ function ProjectDetails() {
     document.getElementById("mySidebar").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
   };
+
+  
 
   const isAdmin = project?.members.some(member => member.email === currentUser.email && member.role === 'admin');
   const isEditor = project?.members.some(member => member.email === currentUser.email && member.role === 'editor');
